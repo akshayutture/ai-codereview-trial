@@ -193,7 +193,7 @@ async def get_active_reviews():
 async def cancel_review(request_id: str):
     """Cancel an active review."""
     try:
-        cancelled = await webhook_handler.review_engine.cancel_review(request_id)
+        cancelled = await webhook_handler.cancel_review(request_id)
         
         if cancelled:
             return {"status": "cancelled", "request_id": request_id}

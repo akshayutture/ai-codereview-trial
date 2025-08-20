@@ -342,3 +342,13 @@ class GitHubWebhookHandler:
                 "task_name": task.get_name()
             }
         return active_reviews
+
+    async def cancel_review(self, request_id: str) -> bool:
+        """Cancel an active review tracked by this handler."""
+        if request_id in self._active_tasks:
+            task = self._active_tasks[request_id]
+            task.cancel()
+            del self._active_tasks[request_id]
+            logger.info("Cancelled review", request_id=request_id)
+            return True
+        return False
